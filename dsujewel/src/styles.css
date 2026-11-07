@@ -1,0 +1,96 @@
+:root {
+  --bg: #07070d;
+  --panel: #12121e;
+  --text: #f3f3f8;
+  --muted: #9a9ab0;
+  --accent: #ffcc33;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#root { width: 100%; max-width: 520px; }
+
+.title {
+  margin: 4px 0 12px;
+  font-size: 26px;
+  text-align: center;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #ff4d6d, #ffcc33, #3ddc84, #4d8dff, #c86bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hud { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+.stat { background: var(--panel); border-radius: 12px; padding: 8px 10px; text-align: center; }
+.stat-label { font-size: 12px; color: var(--muted); }
+.stat-value { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.board-area { width: 100%; }
+.board {
+  position: relative;
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 0 2px #1d1d2e, 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+.board canvas { display: block; touch-action: none; }
+
+.controls { display: flex; gap: 8px; margin-top: 12px; }
+button {
+  flex: 1;
+  padding: 12px;
+  border: 0;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--panel);
+  color: var(--text);
+}
+button.primary { background: var(--accent); color: #222; }
+button:active { transform: scale(0.97); }
+
+.help {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--panel);
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  text-align: center;
+}
+.help b { color: var(--accent); }
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.75);
+  text-align: center;
+}
+.overlay h2 { margin: 0; font-size: 30px; }
+.overlay p { margin: 0; font-size: 18px; color: var(--muted); }
+.overlay button { flex: none; padding: 12px 28px; }

@@ -4,7 +4,7 @@
 - 작성일: 2026-11-07
 - 프로젝트 이름: dsujewel
 - 게임 화면 제목: 💎 보석 맞추기
-- 코드 위치: `dsujewel/index.html` (단일 HTML 파일)
+- 코드 위치: `dsujewel/` (React + Vite 앱). 처음 만든 단일 HTML 버전은 맨 위 `index.html`에 있어요.
 - GitHub 저장소: https://github.com/ssj2121/jewel1107
 
 ---
@@ -15,7 +15,7 @@ dsujewel은 웹 브라우저에서 바로 실행되는 **매치-3 보석 퍼즐 
 
 - **플랫폼:** 데스크톱·모바일 웹 브라우저
 - **설치:** 필요 없음. `index.html`을 열기만 하면 실행돼요.
-- **기술:** HTML + CSS + JavaScript(Canvas 2D). 외부 라이브러리나 이미지 파일을 쓰지 않아요.
+- **기술:** React 18 + Vite, 게임판은 Canvas 2D. 이미지 파일 없이 보석을 코드로 그려요.
 
 ## 2. 목표
 
@@ -156,7 +156,21 @@ dsujewel은 웹 브라우저에서 바로 실행되는 **매치-3 보석 퍼즐 
 
 ## 8. 기술 사양
 
-- **파일 구성:** `dsujewel/index.html` 하나에 HTML, CSS, JavaScript가 모두 들어 있어요.
+- **파일 구성 (`dsujewel/`):**
+
+| 경로 | 역할 |
+|---|---|
+| `src/game/constants.js` | 판 크기, 이동 횟수, 보석 정의, 아이템, 콤보 보정 확률, 연출 시간 |
+| `src/game/engine.js` | 게임 규칙과 상태 (`JewelGame` 클래스). React와 분리되어 테스트 가능 |
+| `src/game/engine.test.js` | 엔진 테스트 (Vitest) |
+| `src/game/gems.js` | 보석 7종 이미지를 미리 그림 |
+| `src/game/renderer.js` | 게임판·아이템·이펙트를 캔버스에 그림 |
+| `src/components/Board.jsx` | 캔버스, 크기 조절, 애니메이션 루프, 마우스/터치 입력 |
+| `src/components/Hud.jsx`, `Controls.jsx`, `ItemHelp.jsx`, `GameOverOverlay.jsx` | 점수판, 버튼, 아이템 설명, 종료 화면 |
+| `src/hooks/useBestScore.js` | 최고 점수 저장 |
+| `src/App.jsx` | 화면 조립. `useSyncExternalStore`로 엔진의 점수·이동·종료 상태를 구독 |
+
+- **실행:** `npm install` → `npm run dev` (개발), `npm run build` (배포용 `dist/`), `npm test` (테스트)
 - **렌더링:** Canvas 2D. 보석 7종(일반 6 + 무지개)을 미리 그려 두고 매 프레임 이미지로 찍어요.
 - **게임 루프:** `requestAnimationFrame`. 한 프레임의 시간 간격은 최대 50ms로 제한해요.
 - **상태 흐름:**
@@ -180,8 +194,10 @@ idle ──바꾸기──▶ swap ──매치 없음──▶ swapback ──�
 | 드래그 바꾸기, 매치, 점수, 이동 감소, 새 보석 채우기 | ✅ 브라우저에서 확인 |
 | 콤보 3단계에서 아이템 생성, 아이템 연쇄 발동 | ✅ 테스트 코드로 확인 (테스트 코드는 삭제함) |
 | 아이템 4종 화면 표시 | ✅ 브라우저에서 확인 |
-| 무지개 보석을 바꿔서 발동 | ⚠️ 아직 직접 확인하지 않음 |
-| 게임 종료 화면 | ⚠️ 아직 직접 확인하지 않음 |
+| 무지개 발동, 무지개끼리 바꾸기, 아이템 연쇄 | ✅ 엔진 테스트로 확인 (React 버전) |
+| 이동 소진 시 게임 종료 | ✅ 엔진 테스트로 확인 (React 버전) |
+| React 버전 화면, 드래그 바꾸기, 점수·이동·최고 점수, 새 게임 | ✅ 브라우저에서 확인 |
+| 게임 종료 화면(오버레이) 표시 | ⚠️ 화면으로는 아직 직접 확인하지 않음 |
 
 ## 10. 저장소와 배포 현황
 
